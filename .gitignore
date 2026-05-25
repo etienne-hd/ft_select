@@ -1,0 +1,5 @@
+ft_select
+.build/
+compile_commands.json
+*.o
+*.a
