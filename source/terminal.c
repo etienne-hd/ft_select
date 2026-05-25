@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 00:09:38 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 00:09:47 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/26 00:34:19 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_terminal	init_terminal(void)
 	if (!term_type || tgetent(terminal.buffer, term_type) != 1)
 		return (terminal);
 	tcgetattr(1, &terminal.old);
+	terminal.new = terminal.old;
 	terminal.new.c_lflag &= ~(ICANON | ECHO);
 	terminal.new.c_cc[VTIME] = 1;
 	terminal.new.c_cc[VMIN] = 0;

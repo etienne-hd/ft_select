@@ -12,7 +12,8 @@ INC_DIR = include/
 SOURCE = $(SRC_DIR)main.c \
 	$(SRC_DIR)key_parser.c \
 	$(SRC_DIR)ctx.c \
-	$(SRC_DIR)terminal.c
+	$(SRC_DIR)terminal.c \
+	$(SRC_DIR)select.c
 
 
 LIBFT = library/libft/libft.a
