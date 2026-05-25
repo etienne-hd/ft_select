@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 21:30:07 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/25 22:53:47 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/25 23:30:32 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,15 @@ typedef enum e_keymaps
 	KEY_ARROW_DOWN,
 	KEY_ARROW_LEFT,
 	KEY_ARROW_RIGHT
-}	t_keymaps;
+}				t_keymaps;
 
 typedef struct s_key
 {
 	t_keymaps	code;
 	char		ctrl_pressed;
 	char		shift_pressed;
-}	t_key;
+}				t_key;
 
-t_key	get_key(char *buffer, uint *cursor);
+t_key			get_key(char *buffer, uint *cursor);
 
 #endif
