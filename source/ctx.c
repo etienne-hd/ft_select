@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 23:11:31 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/25 23:13:01 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/25 23:17:35 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ t_ctx	init_ctx(int argc, char **argv)
 
 	ctx.arg_count = argc - 1;
 	ctx.args = argv + 1;
-	ctx.args_state = malloc(sizeof(char) * ctx.arg_count);
+	ctx.args_state = malloc(sizeof(char) * ctx.arg_count / 4 + (ctx.arg_count
+				% 4 != 0));
 	return (ctx);
 }
 
