@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 00:09:06 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 00:11:55 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/26 01:27:12 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,12 @@
 # include "ctx.h"
 
 void	show_selected(t_ctx *ctx);
+void	ft_select(t_ctx *ctx);
+
+void	init_signal(t_ctx *ctx);
+
+void	render(t_ctx *ctx);
+
+void	on_resize(t_ctx *ctx);
 
 #endif

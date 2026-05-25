@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 23:13:10 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 00:49:57 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/26 01:06:21 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef enum e_state
 
 typedef struct s_ctx
 {
-	t_terminal	terminal;
+	t_terminal	term;
 	uint		arg_count;
 	char		**args;
 	char		*args_state;

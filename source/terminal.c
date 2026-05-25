@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 00:09:38 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 00:34:19 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/26 01:13:08 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_terminal	init_terminal(void)
 	return (terminal);
 }
 
-void	restore_terminal(t_terminal *terminal)
+void	restore_terminal(t_terminal *term)
 {
-	tcsetattr(1, 0, &terminal->old);
+	tcsetattr(1, 0, &term->old);
 }

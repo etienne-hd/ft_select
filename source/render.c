@@ -1,35 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/25 21:30:02 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 01:09:58 by ehode            ###   ########.fr       */
+/*   Created: 2026/05/26 01:13:33 by ehode             #+#    #+#             */
+/*   Updated: 2026/05/26 01:13:34 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ctx.h"
-#include "libft.h"
-#include "select.h"
-#include <sys/types.h>
-#include <termcap.h>
-#include <termios.h>
-#include <unistd.h>
 
-int	main(int argc, char **argv)
+void	render(t_ctx *ctx)
 {
-	t_ctx	ctx;
-
-	if (argc == 1)
-		return (0);
-	ctx = init_ctx(argc, argv);
-	if (!ctx.args)
-	{
-		ft_putstr_fd("Unable to init ctx.\n", 2);
-		return (1);
-	}
-	ft_select(&ctx);
-	destroy_ctx(&ctx);
+	(void)ctx;
 }

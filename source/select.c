@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 00:14:55 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 00:53:51 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/26 01:37:54 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,14 @@ void	show_selected(t_ctx *ctx)
 			printed_args++;
 		}
 		i++;
+	}
+}
+
+void	ft_select(t_ctx *ctx)
+{
+	init_signal(ctx);
+	while (1)
+	{
+		usleep(10000);
 	}
 }
