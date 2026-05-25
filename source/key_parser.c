@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 21:29:58 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/25 22:52:52 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/26 00:02:30 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,8 @@ static t_key	parse_escape_sequence(char *buffer, uint *cursor)
 	return ((t_key){.code = KEY_NONE, .ctrl_pressed = 0, .shift_pressed = 0});
 }
 
-static t_key	parse_control_char(char *buffer, uint *cursor)
+static t_key	parse_control_char(char *buffer)
 {
-	(*cursor)++;
 	if (buffer[0] == 8)
 		return ((t_key){.code = KEY_BACKSPACE, .ctrl_pressed = 0,
 			.shift_pressed = 0});
@@ -58,9 +57,8 @@ static t_key	parse_control_char(char *buffer, uint *cursor)
 	}
 }
 
-static t_key	parse_ascii(char *buffer, uint *cursor)
+static t_key	parse_ascii(char *buffer)
 {
-	(*cursor)++;
 	if (buffer[0] >= 'a' && buffer[0] <= 'z')
 		return ((t_key){.code = KEY_A + buffer[0] - 'a', .shift_pressed = 0,
 			.ctrl_pressed = 0});
@@ -79,10 +77,10 @@ t_key	get_key(char *buffer, uint *cursor)
 	else if (buffer[0] == 27)
 		key = parse_escape_sequence(buffer + 1, cursor);
 	else if (buffer[0] < 32)
-		key = parse_control_char(buffer, cursor);
+		key = parse_control_char(buffer);
 	else if (buffer[0] == 127)
 		key.code = KEY_DELETE;
 	else
-		key = parse_ascii(buffer, cursor);
+		key = parse_ascii(buffer);
 	return (key);
 }

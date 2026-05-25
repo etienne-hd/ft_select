@@ -1,7 +1,7 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g \
 	-I include \
-	-I library/libft 
+	-I library/libft \
 
 NAME = ft_select
 
@@ -11,12 +11,13 @@ INC_DIR = include/
 
 SOURCE = $(SRC_DIR)main.c \
 	$(SRC_DIR)key_parser.c \
-	$(SRC_DIR)ctx.c
+	$(SRC_DIR)ctx.c \
+	$(SRC_DIR)terminal.c
 
 
 LIBFT = library/libft/libft.a
 
-LDFLAGS = $(SUPERPARSE) $(LIBFT)
+LDFLAGS = $(SUPERPARSE) $(LIBFT) -ltermcap
 
 OBJS = $(SOURCE:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 
