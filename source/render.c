@@ -6,35 +6,37 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 01:13:33 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 22:34:27 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/27 00:35:21 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ctx.h"
 #include "libft.h"
 #include "select.h"
+#include "terminal.h"
 #include <stdint.h>
 #include <sys/types.h>
 #include <termcap.h>
 #include <unistd.h>
 
-static void	print_str(const char *s, uint col, uint row, t_text_style style)
+static void	print_str(t_terminal *term, const char *s, uint col, uint row,
+		t_text_style style)
 {
-	ft_putstr_fd(tgoto(tgetstr("cm", 0), col, row), 1);
+	ft_putstr_fd(tgoto(tgetstr("cm", 0), col, row), term->out);
 	if (style & NORMAL)
-		ft_putstr_fd(tgetstr("me", 0), 1);
+		ft_putstr_fd(tgetstr("me", 0), term->out);
 	if (style & INVERT)
-		ft_putstr_fd(tgetstr("mr", 0), 1);
+		ft_putstr_fd(tgetstr("mr", 0), term->out);
 	if (style & UNDERLINE)
-		ft_putstr_fd(tgetstr("us", 0), 1);
-	write(1, s, ft_strlen(s));
+		ft_putstr_fd(tgetstr("us", 0), term->out);
+	write(term->out, s, ft_strlen(s));
 	if (style > NORMAL)
-		ft_putstr_fd(tgetstr("me", 0), 1);
+		ft_putstr_fd(tgetstr("me", 0), term->out);
 }
 
-static void	clear_screen(void)
+static void	clear_screen(t_terminal *term)
 {
-	ft_putstr_fd(tgetstr("cl", 0), 1);
+	ft_putstr_fd(tgetstr("cl", 0), term->out);
 }
 
 void	render_arg(t_ctx *ctx, uint real_choice_index, uint choice_index)
@@ -46,8 +48,9 @@ void	render_arg(t_ctx *ctx, uint real_choice_index, uint choice_index)
 		style |= INVERT;
 	if (choice_index == ctx->hover_choice)
 		style |= UNDERLINE;
-	print_str(ctx->choices[real_choice_index], (choice_index % ctx->grid.col)
-		* ctx->grid.row + MARGIN, choice_index / ctx->grid.col, style);
+	print_str(&ctx->term, ctx->choices[real_choice_index], (choice_index
+			% ctx->grid.col) * ctx->grid.row + MARGIN, choice_index
+		/ ctx->grid.col, style);
 }
 
 static void	refresh_grid(t_ctx *ctx)
@@ -81,10 +84,10 @@ void	render(t_ctx *ctx)
 	uint8_t	is_deleted;
 
 	refresh_grid(ctx);
-	clear_screen();
+	clear_screen(&ctx->term);
 	if (!ctx->grid.is_displayable)
 	{
-		print_str("No enough space!", 0, 0, INVERT);
+		print_str(&ctx->term, "No enough space!", 0, 0, INVERT);
 		return ;
 	}
 	choice_index = 0;
