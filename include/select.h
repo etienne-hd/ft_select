@@ -6,12 +6,13 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 00:09:06 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 16:04:44 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/26 18:12:05 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SELECT_H
 # define SELECT_H
+# define MARGIN 1
 
 # include "ctx.h"
 

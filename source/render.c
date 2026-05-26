@@ -6,13 +6,15 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 01:13:33 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 17:13:47 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/26 18:36:41 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ctx.h"
 #include "libft.h"
 #include "select.h"
+#include <stdint.h>
+#include <sys/types.h>
 #include <termcap.h>
 #include <unistd.h>
 
@@ -35,12 +37,63 @@ static void	clear_screen(void)
 	ft_putstr_fd(tgetstr("cl", 0), 1);
 }
 
+uint8_t	get_column_size(t_ctx *ctx, uint *column_count, uint *row_length)
+{
+	uint	i;
+	uint	length;
+	uint	arg_count;
+	uint8_t	is_deleted;
+
+	*row_length = 0;
+	arg_count = 0;
+	i = 0;
+	while (i < ctx->arg_count)
+	{
+		is_deleted = ctx->args_state[i / 4] & (1 << (i % 4 * 2 + DELETED));
+		if (!is_deleted)
+		{
+			length = ft_strlen(ctx->args[i]) + MARGIN * 2;
+			if (length > *row_length)
+				*row_length = length;
+			arg_count++;
+		}
+		i++;
+	}
+	*column_count = ctx->term.win.col / *row_length;
+	return (arg_count <= *column_count * ctx->term.win.row);
+}
+
+void	render_arg(char *arg, uint arg_number, uint column_count,
+		uint row_length)
+{
+	print_str(arg, (arg_number % column_count) * row_length + MARGIN, arg_number
+		/ column_count, NORMAL);
+}
+
 void	render(t_ctx *ctx)
 {
-	const char message[] = "Hello, World!";
+	uint	column_count;
+	uint	row_length;
+	uint	arg_number;
+	uint	i;
+	uint8_t	is_deleted;
 
 	clear_screen();
-	uint pos_row = ctx->term.win.row / 2;
-	uint pos_col = ctx->term.win.col / 2 - ft_strlen(message) / 2;
-	print_str(message, pos_col, pos_row, INVERT | UNDERLINE);
+	if (!get_column_size(ctx, &column_count, &row_length))
+	{
+		ft_putstr_fd("No enough space...", 1);
+		return ;
+	}
+	arg_number = 0;
+	i = 0;
+	while (i < ctx->arg_count)
+	{
+		is_deleted = ctx->args_state[i / 4] & (1 << (i % 4 * 2 + DELETED));
+		if (!is_deleted)
+		{
+			render_arg(ctx->args[i], arg_number, column_count, row_length);
+			arg_number++;
+		}
+		i++;
+	}
 }
