@@ -6,14 +6,16 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 01:13:35 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 18:55:22 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/26 21:32:36 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ctx.h"
-#include "key_parser.h"
+#include "keyboard.h"
 #include "select.h"
+#include "utils.h"
 #include <sys/ioctl.h>
+#include <sys/types.h>
 #include <unistd.h>
 
 void	on_resize(t_ctx *ctx)
@@ -25,7 +27,27 @@ void	on_resize(t_ctx *ctx)
 void	on_key(t_ctx *ctx, t_key *key)
 {
 	if (key->code == KEY_ARROW_LEFT)
-		ctx->hover_arg -= 1;
+	{
+		if (ctx->hover_choice == 0)
+			ctx->hover_choice = ctx->alive_choice_count - 1;
+		else
+			ctx->hover_choice--;
+	}
 	else if (key->code == KEY_ARROW_RIGHT)
-		ctx->hover_arg += 1;
+	{
+		if (ctx->hover_choice == ctx->alive_choice_count - 1)
+			ctx->hover_choice = 0;
+		else
+			ctx->hover_choice++;
+	}
+	else if (key->code == KEY_SPACE)
+		toggle_arg_state(ctx, ctx->hover_choice, SELECTED);
+	else if (key->code == KEY_DELETE || key->code == KEY_BACKSPACE)
+	{
+		toggle_arg_state(ctx, ctx->hover_choice, DELETED);
+		ctx->alive_choice_count -= 1;
+		if (ctx->alive_choice_count != 0
+			&& ctx->hover_choice == ctx->alive_choice_count)
+			ctx->hover_choice -= 1;
+	}
 }

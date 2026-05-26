@@ -10,13 +10,14 @@ SRC_DIR = source/
 INC_DIR = include/
 
 SOURCE = $(SRC_DIR)main.c \
-	$(SRC_DIR)key_parser.c \
+	$(SRC_DIR)keyboard.c \
 	$(SRC_DIR)ctx.c \
 	$(SRC_DIR)terminal.c \
 	$(SRC_DIR)select.c \
 	$(SRC_DIR)render.c \
 	$(SRC_DIR)event.c \
-	$(SRC_DIR)signal.c
+	$(SRC_DIR)signal.c \
+	$(SRC_DIR)utils.c
 
 
 LIBFT = library/libft/libft.a

@@ -1,40 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/25 21:30:02 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 21:28:56 by ehode            ###   ########.fr       */
+/*   Created: 2026/05/26 20:58:13 by ehode             #+#    #+#             */
+/*   Updated: 2026/05/26 21:14:54 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ctx.h"
-#include "libft.h"
-#include "select.h"
-#include "terminal.h"
+#include "utils.h"
+#include <stdint.h>
 #include <sys/types.h>
-#include <termcap.h>
-#include <termios.h>
-#include <unistd.h>
 
-int	main(int argc, char **argv)
+void	toggle_arg_state(t_ctx *ctx, uint arg_number, t_state state)
 {
-	t_ctx	ctx;
+	uint	i;
+	uint	current_arg;
 
-	if (argc == 1)
-		return (0);
-	ctx = init_ctx(argc, argv);
-	if (!ctx.choice_state)
+	current_arg = 0;
+	i = 0;
+	while (i < ctx->choice_count)
 	{
-		ft_putstr_fd("Unable to init ctx.\n", 2);
-		return (1);
+		if (!(ctx->choice_state[i] & DELETED))
+		{
+			if (arg_number == current_arg)
+			{
+				ctx->choice_state[i] ^= state;
+				break ;
+			}
+			current_arg++;
+		}
+		i++;
 	}
-	enter_terminal(&ctx.term);
-	if (ft_select(&ctx) == 2)
-	{
-		// show value in term
-	}
-	destroy_ctx(&ctx);
 }

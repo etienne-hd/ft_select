@@ -1,37 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ctx.h                                              :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/25 23:13:10 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 21:11:48 by ehode            ###   ########.fr       */
+/*   Created: 2026/05/26 20:58:15 by ehode             #+#    #+#             */
+/*   Updated: 2026/05/26 20:59:53 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CTX_H
-# define CTX_H
-# include "terminal.h"
+#ifndef UTILS_H
+# define UTILS_H
+# include "ctx.h"
 # include <sys/types.h>
 
-typedef enum e_state
-{
-	SELECTED = 1 << 0,
-	DELETED = 1 << 1
-}				t_state;
-
-typedef struct s_ctx
-{
-	t_terminal	term;
-	uint		choice_count;
-	uint		alive_choice_count;
-	char		**choices;
-	char		*choice_state;
-	uint		hover_choice;
-}				t_ctx;
-
-t_ctx			init_ctx(int argc, char **argv);
-void			destroy_ctx(t_ctx *ctx);
+void	toggle_arg_state(t_ctx *ctx, uint arg_number, t_state state);
 
 #endif

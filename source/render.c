@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 01:13:33 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 18:59:17 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/26 21:24:26 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ uint8_t	get_column_size(t_ctx *ctx, uint *column_count, uint *row_length)
 	*row_length = 0;
 	arg_count = 0;
 	i = 0;
-	while (i < ctx->arg_count)
+	while (i < ctx->choice_count)
 	{
-		is_deleted = ctx->args_state[i / 4] & (1 << (i % 4 * 2 + DELETED));
+		is_deleted = ctx->choice_state[i] & DELETED;
 		if (!is_deleted)
 		{
-			length = ft_strlen(ctx->args[i]) + MARGIN * 2;
+			length = ft_strlen(ctx->choices[i]) + MARGIN * 2;
 			if (length > *row_length)
 				*row_length = length;
 			arg_count++;
@@ -63,17 +63,18 @@ uint8_t	get_column_size(t_ctx *ctx, uint *column_count, uint *row_length)
 	return (arg_count <= *column_count * ctx->term.win.row);
 }
 
-void	render_arg(char *arg, uint hover_arg, uint arg_number,
+void	render_arg(t_ctx *ctx, uint real_choice_index, uint choice_index,
 		uint column_count, uint row_length)
 {
 	t_text_style	style;
 
-	if (arg_number == hover_arg)
-		style = UNDERLINE;
-	else
-		style = NORMAL;
-	print_str(arg, (arg_number % column_count) * row_length + MARGIN, arg_number
-		/ column_count, style);
+	style = NORMAL;
+	if (ctx->choice_state[real_choice_index] & SELECTED)
+		style |= INVERT;
+	if (choice_index == ctx->hover_choice)
+		style |= UNDERLINE;
+	print_str(ctx->choices[real_choice_index], (choice_index % column_count)
+		* row_length + MARGIN, choice_index / column_count, style);
 }
 
 void	render(t_ctx *ctx)
@@ -92,13 +93,12 @@ void	render(t_ctx *ctx)
 	}
 	arg_number = 0;
 	i = 0;
-	while (i < ctx->arg_count)
+	while (i < ctx->choice_count)
 	{
-		is_deleted = ctx->args_state[i / 4] & (1 << (i % 4 * 2 + DELETED));
+		is_deleted = ctx->choice_state[i] & DELETED;
 		if (!is_deleted)
 		{
-			render_arg(ctx->args[i], ctx->hover_arg, arg_number, column_count,
-				row_length);
+			render_arg(ctx, i, arg_number, column_count, row_length);
 			arg_number++;
 		}
 		i++;

@@ -1,17 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   key_parser.h                                       :+:      :+:    :+:   */
+/*   key.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 21:30:07 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/25 23:30:32 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/26 20:56:26 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef KEY_PARSER_H
 # define KEY_PARSER_H
+#include "ctx.h"
+#include <stdint.h>
 # include <sys/types.h>
 
 typedef enum e_keymaps
@@ -46,6 +48,7 @@ typedef enum e_keymaps
 	KEY_ESCAPE,
 	KEY_ENTER,
 	KEY_TAB,
+	KEY_SPACE,
 	KEY_BACKSPACE,
 	KEY_DELETE,
 	KEY_ARROW_UP,
@@ -62,5 +65,6 @@ typedef struct s_key
 }				t_key;
 
 t_key			get_key(char *buffer, uint *cursor);
+uint8_t			read_keyboard(t_ctx *ctx);
 
 #endif
