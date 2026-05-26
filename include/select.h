@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 00:09:06 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 02:57:56 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/26 16:04:44 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 
 typedef enum e_text_style
 {
-	NORMAL,
-	INVERT,
-	UNDERLINE
+	NORMAL = 1 << 0,
+	INVERT = 1 << 1,
+	UNDERLINE = 1 << 2
 }		t_text_style;
 
 void	show_selected(t_ctx *ctx);

@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 01:13:33 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 03:03:32 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/26 17:13:47 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,15 @@
 static void	print_str(const char *s, uint col, uint row, t_text_style style)
 {
 	ft_putstr_fd(tgoto(tgetstr("cm", 0), col, row), 1);
-	if (style == NORMAL)
-		ft_putstr_fd(tgetstr("se", 0), 1);
-	else if (style == INVERT)
+	if (style & NORMAL)
+		ft_putstr_fd(tgetstr("me", 0), 1);
+	if (style & INVERT)
 		ft_putstr_fd(tgetstr("mr", 0), 1);
-	else if (style == UNDERLINE)
+	if (style & UNDERLINE)
 		ft_putstr_fd(tgetstr("us", 0), 1);
 	write(1, s, ft_strlen(s));
+	if (style > NORMAL)
+		ft_putstr_fd(tgetstr("me", 0), 1);
 }
 
 static void	clear_screen(void)
@@ -36,8 +38,9 @@ static void	clear_screen(void)
 void	render(t_ctx *ctx)
 {
 	const char message[] = "Hello, World!";
+
 	clear_screen();
 	uint pos_row = ctx->term.win.row / 2;
 	uint pos_col = ctx->term.win.col / 2 - ft_strlen(message) / 2;
-	print_str(message, pos_col, pos_row, NORMAL);
+	print_str(message, pos_col, pos_row, INVERT | UNDERLINE);
 }
