@@ -6,13 +6,14 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 21:30:02 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 01:09:58 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/26 02:36:57 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ctx.h"
 #include "libft.h"
 #include "select.h"
+#include "terminal.h"
 #include <sys/types.h>
 #include <termcap.h>
 #include <termios.h>
@@ -25,11 +26,13 @@ int	main(int argc, char **argv)
 	if (argc == 1)
 		return (0);
 	ctx = init_ctx(argc, argv);
-	if (!ctx.args)
+	if (!ctx.args_state)
 	{
 		ft_putstr_fd("Unable to init ctx.\n", 2);
 		return (1);
 	}
+	enter_terminal();
 	ft_select(&ctx);
+	exit_terminal();
 	destroy_ctx(&ctx);
 }
