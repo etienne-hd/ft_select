@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 01:13:46 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 01:26:48 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/26 18:40:22 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_ctx		*g_ctx;
 
 static void	signal_handler(int signal)
 {
-	void	(*func[])(t_ctx *) = {[SIGWINCH] = on_resize, [31] = 0};
+	static void	(*func[])(t_ctx *) = {[SIGWINCH] = on_resize};
 
 	if (func[signal])
 		func[signal](g_ctx);

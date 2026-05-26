@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 00:14:55 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 02:13:11 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/26 18:37:12 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,11 @@ void	show_selected(t_ctx *ctx)
 
 void	ft_select(t_ctx *ctx)
 {
-	uint8_t exited;
+	uint8_t	exited;
+	char	buffer[1024];
+	uint	byte_reads;
+	uint	cursor;
+	t_key	key;
 
 	init_signal(ctx);
 	refresh_terminal(&ctx->term);
@@ -60,13 +64,12 @@ void	ft_select(t_ctx *ctx)
 	exited = 0;
 	while (exited == 0)
 	{
-		char buffer[1024];
-		uint byte_reads = read(0, buffer, sizeof(buffer) - 1);
+		byte_reads = read(0, buffer, sizeof(buffer) - 1);
 		buffer[byte_reads] = 0;
-		uint cursor = 0;
+		cursor = 0;
 		while (byte_reads)
 		{
-			t_key key = get_key(buffer + cursor, &cursor);
+			key = get_key(buffer + cursor, &cursor);
 			if (!key.code)
 				break ;
 			if (key.code == KEY_ESCAPE)

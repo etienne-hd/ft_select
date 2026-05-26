@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 00:09:38 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 02:52:27 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/26 18:36:53 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ void	restore_terminal(t_terminal *term)
 
 void	refresh_terminal(t_terminal *term)
 {
-	struct winsize win;
-	ioctl(1, TIOCGWINSZ, &win);
+	struct winsize	win;
 
+	ioctl(1, TIOCGWINSZ, &win);
 	term->win.col = win.ws_col;
 	term->win.row = win.ws_row;
 }
