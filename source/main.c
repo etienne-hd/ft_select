@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 21:30:02 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 02:36:57 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/26 02:51:15 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ int	main(int argc, char **argv)
 		ft_putstr_fd("Unable to init ctx.\n", 2);
 		return (1);
 	}
-	enter_terminal();
+	enter_terminal(&ctx.term);
 	ft_select(&ctx);
-	exit_terminal();
 	destroy_ctx(&ctx);
 }

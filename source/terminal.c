@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 00:09:38 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 02:34:45 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/26 02:52:27 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,21 @@ t_terminal	init_terminal(void)
 	terminal.new.c_lflag &= ~(ICANON | ECHO);
 	terminal.new.c_cc[VTIME] = 0;
 	terminal.new.c_cc[VMIN] = 1;
-	tcsetattr(1, 0, &terminal.new);
 	terminal.initialized = 1;
 	return (terminal);
 }
 
-void	enter_terminal(void)
+void	enter_terminal(t_terminal *term)
 {
+	tcsetattr(1, 0, &term->new);
 	ft_putstr_fd(tgetstr("ti", NULL), 1);
-}
-
-void	exit_terminal(void)
-{
-	ft_putstr_fd(tgetstr("te", NULL), 1);
+	ft_putstr_fd(tgetstr("vi", NULL), 1);
 }
 
 void	restore_terminal(t_terminal *term)
 {
+	ft_putstr_fd(tgetstr("ve", NULL), 1);
+	ft_putstr_fd(tgetstr("te", NULL), 1);
 	tcsetattr(1, 0, &term->old);
 }
 
