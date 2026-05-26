@@ -6,14 +6,18 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 00:09:38 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 01:13:08 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/26 02:34:45 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "terminal.h"
+#include <stdio.h>
 #include <stdlib.h>
+#include <sys/ioctl.h>
 #include <termcap.h>
 #include <termios.h>
+#include <unistd.h>
 
 t_terminal	init_terminal(void)
 {
@@ -27,14 +31,33 @@ t_terminal	init_terminal(void)
 	tcgetattr(1, &terminal.old);
 	terminal.new = terminal.old;
 	terminal.new.c_lflag &= ~(ICANON | ECHO);
-	terminal.new.c_cc[VTIME] = 1;
-	terminal.new.c_cc[VMIN] = 0;
+	terminal.new.c_cc[VTIME] = 0;
+	terminal.new.c_cc[VMIN] = 1;
 	tcsetattr(1, 0, &terminal.new);
 	terminal.initialized = 1;
 	return (terminal);
 }
 
+void	enter_terminal(void)
+{
+	ft_putstr_fd(tgetstr("ti", NULL), 1);
+}
+
+void	exit_terminal(void)
+{
+	ft_putstr_fd(tgetstr("te", NULL), 1);
+}
+
 void	restore_terminal(t_terminal *term)
 {
 	tcsetattr(1, 0, &term->old);
+}
+
+void	refresh_terminal(t_terminal *term)
+{
+	struct winsize win;
+	ioctl(1, TIOCGWINSZ, &win);
+
+	term->win.col = win.ws_col;
+	term->win.row = win.ws_row;
 }
