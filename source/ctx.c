@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 23:11:31 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 21:11:14 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/27 00:44:28 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ t_ctx	init_ctx(int argc, char **argv)
 
 void	destroy_ctx(t_ctx *ctx)
 {
-	restore_terminal(&ctx->term);
 	free(ctx->choice_state);
 	ctx->choice_state = NULL;
 }

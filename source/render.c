@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 01:13:33 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/27 00:35:21 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/27 00:48:52 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,21 @@
 static void	print_str(t_terminal *term, const char *s, uint col, uint row,
 		t_text_style style)
 {
-	ft_putstr_fd(tgoto(tgetstr("cm", 0), col, row), term->out);
+	ft_putstr_fd(tgoto(tgetstr("cm", 0), col, row), term->fd);
 	if (style & NORMAL)
-		ft_putstr_fd(tgetstr("me", 0), term->out);
+		ft_putstr_fd(tgetstr("me", 0), term->fd);
 	if (style & INVERT)
-		ft_putstr_fd(tgetstr("mr", 0), term->out);
+		ft_putstr_fd(tgetstr("mr", 0), term->fd);
 	if (style & UNDERLINE)
-		ft_putstr_fd(tgetstr("us", 0), term->out);
-	write(term->out, s, ft_strlen(s));
+		ft_putstr_fd(tgetstr("us", 0), term->fd);
+	write(term->fd, s, ft_strlen(s));
 	if (style > NORMAL)
-		ft_putstr_fd(tgetstr("me", 0), term->out);
+		ft_putstr_fd(tgetstr("me", 0), term->fd);
 }
 
 static void	clear_screen(t_terminal *term)
 {
-	ft_putstr_fd(tgetstr("cl", 0), term->out);
+	ft_putstr_fd(tgetstr("cl", 0), term->fd);
 }
 
 void	render_arg(t_ctx *ctx, uint real_choice_index, uint choice_index)

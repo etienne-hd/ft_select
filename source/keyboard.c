@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 21:29:58 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/27 00:29:05 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/27 00:48:40 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ uint8_t	read_keyboard(t_ctx *ctx)
 	uint cursor;
 	t_key key;
 
-	byte_reads = read(ctx->term.in, buffer, sizeof(buffer) - 1);
+	byte_reads = read(ctx->term.fd, buffer, sizeof(buffer) - 1);
 	buffer[byte_reads] = 0;
 	cursor = 0;
 	while (byte_reads)
