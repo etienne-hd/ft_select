@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 23:13:10 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 01:06:21 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/26 18:49:23 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_ctx
 	uint		arg_count;
 	char		**args;
 	char		*args_state;
+	uint		hover_arg;
 }				t_ctx;
 
 t_ctx			init_ctx(int argc, char **argv);

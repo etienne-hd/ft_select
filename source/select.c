@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 00:14:55 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 18:37:12 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/26 18:53:53 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,33 +50,40 @@ void	show_selected(t_ctx *ctx)
 	}
 }
 
-void	ft_select(t_ctx *ctx)
+static uint8_t	read_keyboard(t_ctx *ctx)
 {
-	uint8_t	exited;
 	char	buffer[1024];
 	uint	byte_reads;
 	uint	cursor;
 	t_key	key;
 
-	init_signal(ctx);
-	refresh_terminal(&ctx->term);
-	render(ctx);
-	exited = 0;
-	while (exited == 0)
+	byte_reads = read(0, buffer, sizeof(buffer) - 1);
+	buffer[byte_reads] = 0;
+	cursor = 0;
+	while (byte_reads)
 	{
-		byte_reads = read(0, buffer, sizeof(buffer) - 1);
-		buffer[byte_reads] = 0;
-		cursor = 0;
-		while (byte_reads)
+		key = get_key(buffer + cursor, &cursor);
+		if (!key.code)
+			break ;
+		if (key.code == KEY_ESCAPE)
 		{
-			key = get_key(buffer + cursor, &cursor);
-			if (!key.code)
-				break ;
-			if (key.code == KEY_ESCAPE)
-			{
-				exited = 1;
-				break ;
-			}
+			return (1);
+			break ;
 		}
+		else
+			on_key(ctx, &key);
+	}
+	return (0);
+}
+
+void	ft_select(t_ctx *ctx)
+{
+	init_signal(ctx);
+	while (1)
+	{
+		refresh_terminal(&ctx->term);
+		render(ctx);
+		if (read_keyboard(ctx))
+			break ;
 	}
 }

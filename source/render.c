@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 01:13:33 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 18:36:41 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/26 18:59:17 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,17 @@ uint8_t	get_column_size(t_ctx *ctx, uint *column_count, uint *row_length)
 	return (arg_count <= *column_count * ctx->term.win.row);
 }
 
-void	render_arg(char *arg, uint arg_number, uint column_count,
-		uint row_length)
+void	render_arg(char *arg, uint hover_arg, uint arg_number,
+		uint column_count, uint row_length)
 {
+	t_text_style	style;
+
+	if (arg_number == hover_arg)
+		style = UNDERLINE;
+	else
+		style = NORMAL;
 	print_str(arg, (arg_number % column_count) * row_length + MARGIN, arg_number
-		/ column_count, NORMAL);
+		/ column_count, style);
 }
 
 void	render(t_ctx *ctx)
@@ -91,7 +97,8 @@ void	render(t_ctx *ctx)
 		is_deleted = ctx->args_state[i / 4] & (1 << (i % 4 * 2 + DELETED));
 		if (!is_deleted)
 		{
-			render_arg(ctx->args[i], arg_number, column_count, row_length);
+			render_arg(ctx->args[i], ctx->hover_arg, arg_number, column_count,
+				row_length);
 			arg_number++;
 		}
 		i++;
