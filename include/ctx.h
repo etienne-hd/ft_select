@@ -6,13 +6,14 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 23:13:10 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 21:11:48 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/26 22:05:47 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CTX_H
 # define CTX_H
 # include "terminal.h"
+#include <stdint.h>
 # include <sys/types.h>
 
 typedef enum e_state
@@ -20,6 +21,13 @@ typedef enum e_state
 	SELECTED = 1 << 0,
 	DELETED = 1 << 1
 }				t_state;
+
+typedef struct	s_grid
+{
+	uint	row;
+	uint	col;
+	uint8_t	is_displayable;
+}	t_grid;
 
 typedef struct s_ctx
 {
@@ -29,6 +37,7 @@ typedef struct s_ctx
 	char		**choices;
 	char		*choice_state;
 	uint		hover_choice;
+	t_grid		grid;
 }				t_ctx;
 
 t_ctx			init_ctx(int argc, char **argv);

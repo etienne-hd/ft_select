@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 00:14:55 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 21:41:06 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/26 22:34:52 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,6 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-/*
-[SELECTED DELETED]	<- each bit is a state of the arg
-[xx][xx][xx][xx]	<- each args is seperate in 2 bits
-[xxxxxxxxxxxxxx]	<- byte
-*/
 void	show_selected(t_ctx *ctx)
 {
 	uint	printed_args;

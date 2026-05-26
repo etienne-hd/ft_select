@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 01:13:33 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 21:24:26 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/26 22:34:27 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,34 +37,7 @@ static void	clear_screen(void)
 	ft_putstr_fd(tgetstr("cl", 0), 1);
 }
 
-uint8_t	get_column_size(t_ctx *ctx, uint *column_count, uint *row_length)
-{
-	uint	i;
-	uint	length;
-	uint	arg_count;
-	uint8_t	is_deleted;
-
-	*row_length = 0;
-	arg_count = 0;
-	i = 0;
-	while (i < ctx->choice_count)
-	{
-		is_deleted = ctx->choice_state[i] & DELETED;
-		if (!is_deleted)
-		{
-			length = ft_strlen(ctx->choices[i]) + MARGIN * 2;
-			if (length > *row_length)
-				*row_length = length;
-			arg_count++;
-		}
-		i++;
-	}
-	*column_count = ctx->term.win.col / *row_length;
-	return (arg_count <= *column_count * ctx->term.win.row);
-}
-
-void	render_arg(t_ctx *ctx, uint real_choice_index, uint choice_index,
-		uint column_count, uint row_length)
+void	render_arg(t_ctx *ctx, uint real_choice_index, uint choice_index)
 {
 	t_text_style	style;
 
@@ -73,34 +46,57 @@ void	render_arg(t_ctx *ctx, uint real_choice_index, uint choice_index,
 		style |= INVERT;
 	if (choice_index == ctx->hover_choice)
 		style |= UNDERLINE;
-	print_str(ctx->choices[real_choice_index], (choice_index % column_count)
-		* row_length + MARGIN, choice_index / column_count, style);
+	print_str(ctx->choices[real_choice_index], (choice_index % ctx->grid.col)
+		* ctx->grid.row + MARGIN, choice_index / ctx->grid.col, style);
 }
 
-void	render(t_ctx *ctx)
+static void	refresh_grid(t_ctx *ctx)
 {
-	uint	column_count;
-	uint	row_length;
-	uint	arg_number;
 	uint	i;
+	uint	current_length;
 	uint8_t	is_deleted;
 
-	clear_screen();
-	if (!get_column_size(ctx, &column_count, &row_length))
-	{
-		ft_putstr_fd("No enough space...", 1);
-		return ;
-	}
-	arg_number = 0;
+	ctx->grid.row = 0;
 	i = 0;
 	while (i < ctx->choice_count)
 	{
 		is_deleted = ctx->choice_state[i] & DELETED;
 		if (!is_deleted)
 		{
-			render_arg(ctx, i, arg_number, column_count, row_length);
-			arg_number++;
+			current_length = ft_strlen(ctx->choices[i]) + MARGIN * 2;
+			if (current_length > ctx->grid.row)
+				ctx->grid.row = current_length;
 		}
 		i++;
+	}
+	ctx->grid.col = ctx->term.win.col / ctx->grid.row;
+	ctx->grid.is_displayable = ctx->alive_choice_count <= ctx->grid.col
+		* ctx->term.win.row;
+}
+
+void	render(t_ctx *ctx)
+{
+	uint	choice_index;
+	uint	real_choice_index;
+	uint8_t	is_deleted;
+
+	refresh_grid(ctx);
+	clear_screen();
+	if (!ctx->grid.is_displayable)
+	{
+		print_str("No enough space!", 0, 0, INVERT);
+		return ;
+	}
+	choice_index = 0;
+	real_choice_index = 0;
+	while (real_choice_index < ctx->choice_count)
+	{
+		is_deleted = ctx->choice_state[real_choice_index] & DELETED;
+		if (!is_deleted)
+		{
+			render_arg(ctx, real_choice_index, choice_index);
+			choice_index++;
+		}
+		real_choice_index++;
 	}
 }

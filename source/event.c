@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 01:13:35 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 21:32:36 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/26 21:59:37 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,18 @@ void	on_key(t_ctx *ctx, t_key *key)
 			ctx->hover_choice = 0;
 		else
 			ctx->hover_choice++;
+	}
+	else if (key->code == KEY_ARROW_UP)
+	{
+		if (ctx->hover_choice / ctx->grid.col == 0)
+			return ;
+		ctx->hover_choice -= ctx->grid.col;
+	}
+	else if (key->code == KEY_ARROW_DOWN)
+	{
+		if (ctx->hover_choice + ctx->grid.col > ctx->alive_choice_count)
+			return ;
+		ctx->hover_choice += ctx->grid.col;
 	}
 	else if (key->code == KEY_SPACE)
 		toggle_arg_state(ctx, ctx->hover_choice, SELECTED);
