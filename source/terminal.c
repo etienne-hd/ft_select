@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 00:09:38 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/27 00:48:25 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/27 01:44:39 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,15 @@ void	enter_terminal(t_terminal *term)
 	ft_putstr_fd(tgetstr("vi", NULL), term->fd);
 }
 
-void	restore_terminal(t_terminal *term)
+void	exit_terminal(t_terminal *term)
 {
 	ft_putstr_fd(tgetstr("ve", NULL), term->fd);
 	ft_putstr_fd(tgetstr("te", NULL), term->fd);
 	tcsetattr(term->fd, 0, &term->old);
+}
+
+void	destroy_terminal(t_terminal *term)
+{
 	if (term->fd != 0)
 		close(term->fd);
 }

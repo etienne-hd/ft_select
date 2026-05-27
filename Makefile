@@ -16,7 +16,8 @@ SOURCE = $(SRC_DIR)main.c \
 	$(SRC_DIR)select.c \
 	$(SRC_DIR)render.c \
 	$(SRC_DIR)event.c \
-	$(SRC_DIR)signal.c \
+	$(SRC_DIR)signal/signal.c \
+	$(SRC_DIR)signal/event.c \
 	$(SRC_DIR)utils.c
 
 
@@ -33,6 +34,7 @@ $(NAME): $(OBJS) $(LIBFT)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)/signal
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT):

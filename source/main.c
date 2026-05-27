@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 21:30:02 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/27 00:44:45 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/27 01:45:42 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int	main(int argc, char **argv)
 	}
 	enter_terminal(&ctx.term);
 	code = ft_select(&ctx);
-	restore_terminal(&ctx.term);
+	exit_terminal(&ctx.term);
+	destroy_terminal(&ctx.term);
 	if (code == 2)
 		show_selected(&ctx);
 	destroy_ctx(&ctx);

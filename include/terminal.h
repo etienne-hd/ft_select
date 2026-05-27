@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 00:09:11 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/27 00:47:50 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/27 01:45:26 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ typedef struct s_terminal
 
 t_terminal			init_terminal(void);
 void				enter_terminal(t_terminal *term);
-void				restore_terminal(t_terminal *term);
+void				exit_terminal(t_terminal *term);
+void				destroy_terminal(t_terminal *term);
 void				refresh_terminal(t_terminal *term);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 01:13:35 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 21:59:37 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/27 01:40:34 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,6 @@
 #include <sys/ioctl.h>
 #include <sys/types.h>
 #include <unistd.h>
-
-void	on_resize(t_ctx *ctx)
-{
-	refresh_terminal(&ctx->term);
-	render(ctx);
-}
 
 void	on_key(t_ctx *ctx, t_key *key)
 {
@@ -48,7 +42,7 @@ void	on_key(t_ctx *ctx, t_key *key)
 	}
 	else if (key->code == KEY_ARROW_DOWN)
 	{
-		if (ctx->hover_choice + ctx->grid.col > ctx->alive_choice_count)
+		if (ctx->hover_choice + ctx->grid.col >= ctx->alive_choice_count)
 			return ;
 		ctx->hover_choice += ctx->grid.col;
 	}
