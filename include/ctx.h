@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 23:13:10 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/27 04:38:39 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/27 19:06:11 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 # include "terminal.h"
 # include <stdint.h>
 # include <sys/types.h>
+
+# define SEARCH_SIZE 255
 
 typedef enum e_state
 {
@@ -37,6 +39,8 @@ typedef struct s_ctx
 	char		**choices;
 	char		*choice_state;
 	uint		hover_choice;
+	char		search[SEARCH_SIZE + 1];
+	uint		search_cursor;
 	t_grid		grid;
 }				t_ctx;
 

@@ -6,14 +6,16 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 01:13:35 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/27 03:59:07 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/27 19:06:19 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ctx.h"
 #include "keyboard.h"
+#include "libft.h"
 #include "select.h"
 #include "utils.h"
+#include <stdint.h>
 #include <sys/ioctl.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -46,6 +48,45 @@ static void	on_arrow_key(t_ctx *ctx, t_key *key)
 	}
 }
 
+void	dynamic_search(t_ctx *ctx, t_key *key)
+{
+	char	c;
+	uint	choice_index;
+	uint	real_choice_index;
+	uint8_t	found;
+
+	c = key->code - KEY_A + 'a';
+	if (key->shift_pressed)
+		c -= 32;
+	ctx->search[ctx->search_cursor] = c;
+	ctx->search_cursor++;
+	found = 0;
+	choice_index = 0;
+	real_choice_index = 0;
+	while (choice_index < ctx->choice_count)
+	{
+		if (!(ctx->choice_state[choice_index] & DELETED))
+		{
+			if (!(ctx->choice_state[choice_index] & SELECTED)
+				&& ft_strncmp(ctx->choices[choice_index], ctx->search,
+					ctx->search_cursor) == 0)
+			{
+				ctx->hover_choice = real_choice_index;
+				found = 1;
+				break ;
+			}
+			real_choice_index++;
+		}
+		choice_index++;
+	}
+	if ((!found && ctx->search_cursor != 1) || ctx->search_cursor > SEARCH_SIZE)
+	{
+		ctx->search_cursor = 0;
+		dynamic_search(ctx, key);
+	}
+	ctx->search[ctx->search_cursor] = '\0';
+}
+
 void	on_key(t_ctx *ctx, t_key *key)
 {
 	if (key->code == KEY_ARROW_LEFT || key->code == KEY_ARROW_RIGHT
@@ -61,4 +102,6 @@ void	on_key(t_ctx *ctx, t_key *key)
 			&& ctx->hover_choice == ctx->alive_choice_count)
 			ctx->hover_choice -= 1;
 	}
+	else if (key->code >= KEY_A && key->code <= KEY_Z)
+		dynamic_search(ctx, key);
 }

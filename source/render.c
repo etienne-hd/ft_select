@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 01:13:33 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/27 17:41:13 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/27 18:59:42 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,14 @@ static void	refresh_grid(t_ctx *ctx)
 		* ctx->term.win.row;
 }
 
+static void	render_dynamic_search(t_ctx *ctx)
+{
+	set_style(&ctx->term, INVERT);
+	print_str(&ctx->term, "Search: ", 0, ctx->term.win.row);
+	set_style(&ctx->term, INVERT);
+	print_str(&ctx->term, ctx->search, 8, ctx->term.win.row);
+}
+
 void	render(t_ctx *ctx)
 {
 	uint	choice_index;
@@ -86,4 +94,5 @@ void	render(t_ctx *ctx)
 		}
 		real_choice_index++;
 	}
+	render_dynamic_search(ctx);
 }
