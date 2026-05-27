@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 01:13:33 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/27 00:48:52 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/27 04:09:24 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ void	render(t_ctx *ctx)
 	clear_screen(&ctx->term);
 	if (!ctx->grid.is_displayable)
 	{
-		print_str(&ctx->term, "No enough space!", 0, 0, INVERT);
+		print_str(&ctx->term, "No enough space!", ctx->term.win.col / 2
+			- ft_strlen("No enough space!") / 2, ctx->term.win.row / 2, INVERT);
 		return ;
 	}
 	choice_index = 0;
