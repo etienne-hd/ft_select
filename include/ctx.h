@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 23:13:10 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/27 04:04:24 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/27 04:38:39 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_ctx
 	t_grid		grid;
 }				t_ctx;
 
-t_ctx			init_ctx(int argc, char **argv);
+void			init_ctx(t_ctx *ctx, int argc, char **argv);
 void			destroy_ctx(t_ctx *ctx);
 
 #endif

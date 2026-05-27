@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 21:30:02 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/27 03:47:02 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/27 04:41:02 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char **argv)
 
 	if (argc == 1)
 		return (0);
-	ctx = init_ctx(argc, argv);
+	init_ctx(&ctx, argc, argv);
 	if (!ctx.choice_state)
 		return (1);
 	enter_terminal(&ctx.term);
