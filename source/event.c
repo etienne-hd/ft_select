@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 01:13:35 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/27 01:40:34 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/27 03:59:07 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-void	on_key(t_ctx *ctx, t_key *key)
+static void	on_arrow_key(t_ctx *ctx, t_key *key)
 {
 	if (key->code == KEY_ARROW_LEFT)
 	{
@@ -36,16 +36,21 @@ void	on_key(t_ctx *ctx, t_key *key)
 	}
 	else if (key->code == KEY_ARROW_UP)
 	{
-		if (ctx->hover_choice / ctx->grid.col == 0)
-			return ;
-		ctx->hover_choice -= ctx->grid.col;
+		if (ctx->hover_choice / ctx->grid.col != 0)
+			ctx->hover_choice -= ctx->grid.col;
 	}
 	else if (key->code == KEY_ARROW_DOWN)
 	{
-		if (ctx->hover_choice + ctx->grid.col >= ctx->alive_choice_count)
-			return ;
-		ctx->hover_choice += ctx->grid.col;
+		if (ctx->hover_choice + ctx->grid.col < ctx->alive_choice_count)
+			ctx->hover_choice += ctx->grid.col;
 	}
+}
+
+void	on_key(t_ctx *ctx, t_key *key)
+{
+	if (key->code == KEY_ARROW_LEFT || key->code == KEY_ARROW_RIGHT
+		|| key->code == KEY_ARROW_UP || key->code == KEY_ARROW_DOWN)
+		on_arrow_key(ctx, key);
 	else if (key->code == KEY_SPACE)
 		toggle_arg_state(ctx, ctx->hover_choice, SELECTED);
 	else if (key->code == KEY_DELETE || key->code == KEY_BACKSPACE)

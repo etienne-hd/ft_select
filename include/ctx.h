@@ -6,14 +6,14 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 23:13:10 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 22:05:47 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/27 04:04:24 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CTX_H
 # define CTX_H
 # include "terminal.h"
-#include <stdint.h>
+# include <stdint.h>
 # include <sys/types.h>
 
 typedef enum e_state
@@ -22,12 +22,12 @@ typedef enum e_state
 	DELETED = 1 << 1
 }				t_state;
 
-typedef struct	s_grid
+typedef struct s_grid
 {
-	uint	row;
-	uint	col;
-	uint8_t	is_displayable;
-}	t_grid;
+	uint		row;
+	uint		col;
+	uint8_t		is_displayable;
+}				t_grid;
 
 typedef struct s_ctx
 {

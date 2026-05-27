@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   key.h                                              :+:      :+:    :+:   */
+/*   keyboard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 21:30:07 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 20:56:26 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/27 04:05:05 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef KEY_PARSER_H
-# define KEY_PARSER_H
-#include "ctx.h"
-#include <stdint.h>
+#ifndef KEYBOARD_H
+# define KEYBOARD_H
+# include "ctx.h"
+# include <stdint.h>
 # include <sys/types.h>
 
 typedef enum e_keymaps
