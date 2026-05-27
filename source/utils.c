@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 20:58:13 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/26 21:45:13 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/28 00:41:49 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdint.h>
 #include <sys/types.h>
 
-void	toggle_arg_state(t_ctx *ctx, uint choice_index, t_state state)
+void	toggle_arg_state(t_ctx *ctx, uint choice_index, uint8_t state)
 {
 	uint	i;
 	uint	current_choice_index;

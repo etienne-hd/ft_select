@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 23:13:10 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/27 19:06:11 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/28 00:41:06 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,8 @@
 
 # define SEARCH_SIZE 255
 
-typedef enum e_state
-{
-	SELECTED = 1 << 0,
-	DELETED = 1 << 1
-}				t_state;
+# define SELECTED 1 << 0
+# define DELETED 1 << 1
 
 typedef struct s_grid
 {
