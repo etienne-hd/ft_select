@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 01:13:35 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/27 19:06:19 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/28 00:45:09 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,13 @@ void	dynamic_search(t_ctx *ctx, t_key *key)
 				&& ft_strncmp(ctx->choices[choice_index], ctx->search,
 					ctx->search_cursor) == 0)
 			{
-				ctx->hover_choice = real_choice_index;
+				ctx->choice_state[choice_index] |= SEARCHED;
+				if (found == 0)
+					ctx->hover_choice = real_choice_index;
 				found = 1;
-				break ;
 			}
+			else if (ctx->choice_state[choice_index] & SEARCHED)
+				ctx->choice_state[choice_index] ^= SEARCHED;
 			real_choice_index++;
 		}
 		choice_index++;

@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 01:13:33 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/28 00:39:34 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/28 01:01:44 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,44 @@
 #include <termcap.h>
 #include <unistd.h>
 
+static uint8_t	render_search_arg(t_ctx *ctx, uint real_choice_index,
+		uint choice_index)
+{
+	char	tmp;
+	uint8_t	offset;
+
+	offset = 0;
+	if (ctx->choice_state[real_choice_index] & SEARCHED
+		&& !(ctx->choice_state[real_choice_index] & SELECTED))
+	{
+		set_style(&ctx->term, INVERT, YELLOW);
+		tmp = ctx->choices[real_choice_index][ctx->search_cursor];
+		ctx->choices[real_choice_index][ctx->search_cursor] = 0;
+		print_str(&ctx->term, ctx->choices[real_choice_index], (choice_index
+				% ctx->grid.col) * ctx->grid.row + MARGIN, choice_index
+			/ ctx->grid.col);
+		offset += ctx->search_cursor;
+		ctx->choices[real_choice_index][ctx->search_cursor] = tmp;
+		set_style(&ctx->term, NORMAL, WHITE);
+	}
+	return (offset);
+}
+
 void	render_arg(t_ctx *ctx, uint real_choice_index, uint choice_index)
 {
 	uint8_t	style;
+	uint	offset;
 
 	style = NORMAL;
 	if (ctx->choice_state[real_choice_index] & SELECTED)
 		style |= INVERT;
 	if (choice_index == ctx->hover_choice)
 		style |= UNDERLINE;
+	offset = render_search_arg(ctx, real_choice_index, choice_index);
 	set_style(&ctx->term, style, WHITE);
-	print_str(&ctx->term, ctx->choices[real_choice_index], (choice_index
-			% ctx->grid.col) * ctx->grid.row + MARGIN, choice_index
-		/ ctx->grid.col);
+	print_str(&ctx->term, ctx->choices[real_choice_index] + offset,
+		(choice_index % ctx->grid.col) * ctx->grid.row + MARGIN + offset,
+		choice_index / ctx->grid.col);
 	set_style(&ctx->term, NORMAL, WHITE);
 }
 
@@ -60,7 +85,7 @@ static void	refresh_grid(t_ctx *ctx)
 		* (ctx->term.win.row - 1);
 }
 
-static void	render_dynamic_search(t_ctx *ctx)
+static void	render_search_footer(t_ctx *ctx)
 {
 	uint	i;
 
@@ -101,5 +126,5 @@ void	render(t_ctx *ctx)
 		}
 		real_choice_index++;
 	}
-	render_dynamic_search(ctx);
+	render_search_footer(ctx);
 }
