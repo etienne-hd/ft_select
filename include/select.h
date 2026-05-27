@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 00:09:06 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/27 04:04:29 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/28 00:15:37 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,6 @@
 # define MARGIN 1
 
 # include "ctx.h"
-
-typedef enum e_text_style
-{
-	NORMAL = 1 << 0,
-	INVERT = 1 << 1,
-	UNDERLINE = 1 << 2
-}		t_text_style;
 
 void	show_selected(t_ctx *ctx);
 uint8_t	ft_select(t_ctx *ctx);

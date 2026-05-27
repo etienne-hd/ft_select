@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 01:13:33 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/27 18:59:42 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/28 00:39:34 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,18 @@
 
 void	render_arg(t_ctx *ctx, uint real_choice_index, uint choice_index)
 {
-	t_text_style	style;
+	uint8_t	style;
 
 	style = NORMAL;
 	if (ctx->choice_state[real_choice_index] & SELECTED)
 		style |= INVERT;
 	if (choice_index == ctx->hover_choice)
 		style |= UNDERLINE;
-	set_style(&ctx->term, style);
+	set_style(&ctx->term, style, WHITE);
 	print_str(&ctx->term, ctx->choices[real_choice_index], (choice_index
 			% ctx->grid.col) * ctx->grid.row + MARGIN, choice_index
 		/ ctx->grid.col);
+	set_style(&ctx->term, NORMAL, WHITE);
 }
 
 static void	refresh_grid(t_ctx *ctx)
@@ -56,15 +57,20 @@ static void	refresh_grid(t_ctx *ctx)
 	}
 	ctx->grid.col = ctx->term.win.col / ctx->grid.row;
 	ctx->grid.is_displayable = ctx->alive_choice_count <= ctx->grid.col
-		* ctx->term.win.row;
+		* (ctx->term.win.row - 1);
 }
 
 static void	render_dynamic_search(t_ctx *ctx)
 {
-	set_style(&ctx->term, INVERT);
+	uint	i;
+
+	i = 0;
+	set_style(&ctx->term, INVERT, WHITE);
+	while (i < ctx->term.win.col)
+		print_str(&ctx->term, " ", i++, ctx->term.win.row);
 	print_str(&ctx->term, "Search: ", 0, ctx->term.win.row);
-	set_style(&ctx->term, INVERT);
 	print_str(&ctx->term, ctx->search, 8, ctx->term.win.row);
+	set_style(&ctx->term, NORMAL, WHITE);
 }
 
 void	render(t_ctx *ctx)
@@ -77,9 +83,10 @@ void	render(t_ctx *ctx)
 	clear_screen(&ctx->term);
 	if (!ctx->grid.is_displayable)
 	{
-		set_style(&ctx->term, INVERT);
+		set_style(&ctx->term, INVERT, RED);
 		print_str(&ctx->term, "No enough space!", ctx->term.win.col / 2
 			- ft_strlen("No enough space!") / 2, ctx->term.win.row / 2);
+		set_style(&ctx->term, NORMAL, WHITE);
 		return ;
 	}
 	choice_index = 0;
