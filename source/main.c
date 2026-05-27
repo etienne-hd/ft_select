@@ -6,12 +6,11 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 21:30:02 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/27 01:45:42 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/27 03:47:02 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ctx.h"
-#include "libft.h"
 #include "select.h"
 #include "terminal.h"
 #include <sys/types.h>
@@ -28,10 +27,7 @@ int	main(int argc, char **argv)
 		return (0);
 	ctx = init_ctx(argc, argv);
 	if (!ctx.choice_state)
-	{
-		ft_putstr_fd("Unable to init ctx.\n", 2);
 		return (1);
-	}
 	enter_terminal(&ctx.term);
 	code = ft_select(&ctx);
 	exit_terminal(&ctx.term);

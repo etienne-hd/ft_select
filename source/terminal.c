@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 00:09:38 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/27 01:44:39 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/27 03:36:02 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ t_terminal	init_terminal(void)
 		return (terminal);
 	term_type = getenv("TERM");
 	if (!term_type || tgetent(terminal.buffer, term_type) != 1)
+	{
+		close(terminal.fd);
 		return (terminal);
+	}
 	tcgetattr(terminal.fd, &terminal.old);
 	terminal.new = terminal.old;
 	terminal.new.c_lflag &= ~(ICANON | ECHO);
