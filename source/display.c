@@ -1,0 +1,26 @@
+#include "display.h"
+#include "libft.h"
+#include "select.h"
+#include "terminal.h"
+#include <termcap.h>
+
+void	set_style(t_terminal *term, t_text_style style)
+{
+	ft_putstr_fd(tgetstr("me", 0), term->fd);
+	if (style & INVERT)
+		ft_putstr_fd(tgetstr("mr", 0), term->fd);
+	if (style & UNDERLINE)
+		ft_putstr_fd(tgetstr("us", 0), term->fd);
+}
+
+void	print_str(t_terminal *term, const char *s, uint col, uint row)
+{
+	ft_putstr_fd(tgoto(tgetstr("cm", 0), col, row), term->fd);
+	write(term->fd, s, ft_strlen(s));
+	ft_putstr_fd(tgetstr("me", 0), term->fd);
+}
+
+void	clear_screen(t_terminal *term)
+{
+	ft_putstr_fd(tgetstr("cl", 0), term->fd);
+}

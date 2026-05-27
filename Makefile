@@ -18,7 +18,8 @@ SOURCE = $(SRC_DIR)main.c \
 	$(SRC_DIR)event.c \
 	$(SRC_DIR)signal/signal.c \
 	$(SRC_DIR)signal/event.c \
-	$(SRC_DIR)utils.c
+	$(SRC_DIR)utils.c \
+	$(SRC_DIR)display.c
 
 
 LIBFT = library/libft/libft.a
