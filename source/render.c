@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 01:13:33 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/28 03:57:48 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/28 05:01:26 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,18 @@ static void	render_search_footer(t_ctx *ctx)
 
 static void	render_cannot_display(t_ctx *ctx)
 {
+	uint	current_row;
+	uint	current_col;
+
 	set_style(&ctx->term, INVERT, RED);
+	current_row = 0;
+	while (current_row < ctx->term.win.row)
+	{
+		current_col = 0;
+		while (current_col < ctx->term.win.col)
+			print_str(&ctx->term, " ", current_col++, current_row);
+		current_row++;
+	}
 	print_str(&ctx->term, "No enough space!", ctx->term.win.col / 2
 		- ft_strlen("No enough space!") / 2, ctx->term.win.row / 2);
 	set_style(&ctx->term, NORMAL, WHITE);
