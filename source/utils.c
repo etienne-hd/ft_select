@@ -6,10 +6,11 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 20:58:13 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/28 02:17:25 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/28 03:58:07 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "display.h"
 #include "utils.h"
 #include <stdint.h>
 #include <sys/types.h>
@@ -54,4 +55,27 @@ uint8_t	get_arg_state(t_ctx *ctx, uint choice_index)
 		i++;
 	}
 	return (0);
+}
+
+t_color	get_color_by_ext(const char *s)
+{
+	const t_color	colors[] = {RED, GREEN, YELLOW, BLUE, PURPLE, CYAN};
+	uint8_t			found;
+	uint			sum;
+	uint			i;
+
+	found = 0;
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == '.')
+			found = 1;
+		i++;
+	}
+	if (!found)
+		return (WHITE);
+	sum = 0;
+	while (s[i] != '.')
+		sum += s[i--];
+	return (colors[sum % sizeof(colors) / sizeof(t_color)]);
 }

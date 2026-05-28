@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 01:13:33 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/28 03:55:18 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/28 03:57:48 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "libft.h"
 #include "select.h"
 #include "terminal.h"
+#include "utils.h"
 #include <stdint.h>
 #include <sys/types.h>
 #include <termcap.h>
@@ -43,29 +44,6 @@ static uint8_t	render_search_arg(t_ctx *ctx, uint8_t style,
 	return (offset);
 }
 
-static t_color	get_color(const char *s)
-{
-	const t_color	colors[] = {RED, GREEN, YELLOW, BLUE, PURPLE, CYAN};
-	uint8_t			found;
-	uint			sum;
-	uint			i;
-
-	found = 0;
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == '.')
-			found = 1;
-		i++;
-	}
-	if (!found)
-		return (WHITE);
-	sum = 0;
-	while (s[i] != '.')
-		sum += s[i--];
-	return (colors[sum % sizeof(colors) / sizeof(t_color)]);
-}
-
 void	render_arg(t_ctx *ctx, uint real_choice_index, uint choice_index)
 {
 	uint8_t	style;
@@ -77,7 +55,8 @@ void	render_arg(t_ctx *ctx, uint real_choice_index, uint choice_index)
 	if (choice_index == ctx->hover_choice)
 		style |= UNDERLINE;
 	offset = render_search_arg(ctx, style, real_choice_index, choice_index);
-	set_style(&ctx->term, style, get_color(ctx->choices[real_choice_index]));
+	set_style(&ctx->term, style,
+		get_color_by_ext(ctx->choices[real_choice_index]));
 	print_str(&ctx->term, ctx->choices[real_choice_index] + offset,
 		(choice_index % ctx->grid.col) * ctx->grid.row + MARGIN + offset,
 		choice_index / ctx->grid.col);
@@ -97,6 +76,14 @@ static void	render_search_footer(t_ctx *ctx)
 	set_style(&ctx->term, NORMAL, WHITE);
 }
 
+static void	render_cannot_display(t_ctx *ctx)
+{
+	set_style(&ctx->term, INVERT, RED);
+	print_str(&ctx->term, "No enough space!", ctx->term.win.col / 2
+		- ft_strlen("No enough space!") / 2, ctx->term.win.row / 2);
+	set_style(&ctx->term, NORMAL, WHITE);
+}
+
 void	render(t_ctx *ctx)
 {
 	uint	choice_index;
@@ -107,10 +94,7 @@ void	render(t_ctx *ctx)
 	clear_screen(&ctx->term);
 	if (!ctx->grid.is_displayable)
 	{
-		set_style(&ctx->term, INVERT, RED);
-		print_str(&ctx->term, "No enough space!", ctx->term.win.col / 2
-			- ft_strlen("No enough space!") / 2, ctx->term.win.row / 2);
-		set_style(&ctx->term, NORMAL, WHITE);
+		render_cannot_display(ctx);
 		return ;
 	}
 	choice_index = 0;
