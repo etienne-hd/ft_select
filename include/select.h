@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 00:09:06 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/28 02:12:52 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/28 02:40:35 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@
 
 void	show_selected(t_ctx *ctx);
 uint8_t	ft_select(t_ctx *ctx);
-
-void	init_signal(t_ctx *ctx);
+void	calculate_grid(t_ctx *ctx);
 
 void	render(t_ctx *ctx);
 

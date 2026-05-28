@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 00:14:55 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/27 00:34:27 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/28 02:41:09 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "keyboard.h"
 #include "libft.h"
 #include "select.h"
+#include "sig.h"
 #include "terminal.h"
 #include <stdint.h>
 #include <sys/types.h>
@@ -41,6 +42,30 @@ void	show_selected(t_ctx *ctx)
 		}
 		i++;
 	}
+}
+
+void	calculate_grid(t_ctx *ctx)
+{
+	uint	i;
+	uint	current_length;
+	uint8_t	is_deleted;
+
+	ctx->grid.row = 0;
+	i = 0;
+	while (i < ctx->choice_count)
+	{
+		is_deleted = ctx->choice_state[i] & DELETED;
+		if (!is_deleted)
+		{
+			current_length = ft_strlen(ctx->choices[i]) + MARGIN * 2;
+			if (current_length > ctx->grid.row)
+				ctx->grid.row = current_length;
+		}
+		i++;
+	}
+	ctx->grid.col = ctx->term.win.col / ctx->grid.row;
+	ctx->grid.is_displayable = ctx->alive_choice_count <= ctx->grid.col
+		* (ctx->term.win.row - 1);
 }
 
 uint8_t	ft_select(t_ctx *ctx)

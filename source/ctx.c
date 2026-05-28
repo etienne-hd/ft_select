@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 23:11:31 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/28 02:37:40 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/28 02:43:59 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@
 #include <stdlib.h>
 #include <sys/types.h>
 
-static void	delete_empty_choices(t_ctx *ctx)
+static void	delete_illegal_choices(t_ctx *ctx)
 {
 	uint	i;
 
 	i = 0;
 	while (i < ctx->choice_count)
 	{
-		if (ctx->choices[i][0] == 0)
+		if (ctx->choices[i][0] == 0 || ft_strchr(ctx->choices[i], '\n'))
 		{
 			ctx->choice_state[i] |= DELETED;
 			ctx->alive_choice_count--;
@@ -50,7 +50,7 @@ void	init_ctx(t_ctx *ctx, int argc, char **argv)
 	if (ctx->choice_state)
 	{
 		bzero(ctx->choice_state, sizeof(uint8_t) * ctx->choice_count);
-		delete_empty_choices(ctx);
+		delete_illegal_choices(ctx);
 	}
 	else
 	{

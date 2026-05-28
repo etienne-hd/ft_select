@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 01:13:33 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/28 01:19:27 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/28 02:41:22 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,30 +61,6 @@ void	render_arg(t_ctx *ctx, uint real_choice_index, uint choice_index)
 	set_style(&ctx->term, NORMAL, WHITE);
 }
 
-static void	refresh_grid(t_ctx *ctx)
-{
-	uint	i;
-	uint	current_length;
-	uint8_t	is_deleted;
-
-	ctx->grid.row = 0;
-	i = 0;
-	while (i < ctx->choice_count)
-	{
-		is_deleted = ctx->choice_state[i] & DELETED;
-		if (!is_deleted)
-		{
-			current_length = ft_strlen(ctx->choices[i]) + MARGIN * 2;
-			if (current_length > ctx->grid.row)
-				ctx->grid.row = current_length;
-		}
-		i++;
-	}
-	ctx->grid.col = ctx->term.win.col / ctx->grid.row;
-	ctx->grid.is_displayable = ctx->alive_choice_count <= ctx->grid.col
-		* (ctx->term.win.row - 1);
-}
-
 static void	render_search_footer(t_ctx *ctx)
 {
 	uint	i;
@@ -104,7 +80,7 @@ void	render(t_ctx *ctx)
 	uint	real_choice_index;
 	uint8_t	is_deleted;
 
-	refresh_grid(ctx);
+	calculate_grid(ctx);
 	clear_screen(&ctx->term);
 	if (!ctx->grid.is_displayable)
 	{
