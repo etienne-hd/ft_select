@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 18:24:48 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/28 00:37:01 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/28 03:47:48 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@
 
 typedef enum e_color
 {
-	BLACK,
-	RED,
-	GREEN,
-	YELLOW,
-	BLUE,
-	PURPLE,
-	CYAN,
-	WHITE
+	BLACK = 0,
+	RED = 1,
+	GREEN = 2,
+	YELLOW = 3,
+	BLUE = 4,
+	PURPLE = 5,
+	CYAN = 6,
+	WHITE = 7
 }		t_color;
 
 void	set_style(t_terminal *term, uint8_t style, t_color color);
