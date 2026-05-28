@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 23:13:10 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/28 00:42:38 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/28 03:59:41 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 
 # define SEARCH_SIZE 255
 
-# define SELECTED 1 << 0
-# define DELETED 1 << 1
-# define SEARCHED 1 << 2
+# define SELECTED 1
+# define DELETED 2
+# define SEARCHED 4
 
 typedef struct s_grid
 {

@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 18:24:48 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/28 03:47:48 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/28 04:01:51 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 # include "terminal.h"
 # include <stdint.h>
 
-# define NORMAL 1 << 0
-# define INVERT 1 << 1
-# define UNDERLINE 1 << 2
+# define NORMAL 1
+# define INVERT 2
+# define UNDERLINE 4
 
 typedef enum e_color
 {
