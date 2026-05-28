@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 01:13:35 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/28 02:38:52 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/28 04:47:08 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,6 @@ void	on_key(t_ctx *ctx, t_key *key)
 			&& ctx->hover_choice == ctx->alive_choice_count)
 			ctx->hover_choice--;
 	}
-	else if (key->code >= KEY_A && key->code <= KEY_Z)
+	else if (key->code == KEY_ASCII)
 		add_search(ctx, key);
 }

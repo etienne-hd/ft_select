@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 21:29:58 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/27 03:59:32 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/28 04:54:30 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,25 @@ static t_key	parse_escape_sequence(char *buffer, uint *cursor)
 			.shift_pressed = 0});
 	if (buffer[0] == '[')
 	{
-		(*cursor)++;
-		if (buffer[1])
-			(*cursor)++;
+		(*cursor) += 1 + (buffer[1] != 0);
 		if (buffer[1] == 51)
-			return ((t_key){.code = KEY_DELETE, .ctrl_pressed = 0,
+			return ((t_key){.code = KEY_DELETE, .ascii = 0, .ctrl_pressed = 0,
 				.shift_pressed = 0});
 		if (buffer[1] == 65)
-			return ((t_key){.code = KEY_ARROW_UP, .ctrl_pressed = 0,
+			return ((t_key){.code = KEY_ARROW_UP, .ascii = 0, .ctrl_pressed = 0,
 				.shift_pressed = 0});
 		else if (buffer[1] == 66)
-			return ((t_key){.code = KEY_ARROW_DOWN, .ctrl_pressed = 0,
-				.shift_pressed = 0});
+			return ((t_key){.code = KEY_ARROW_DOWN, .ascii = 0,
+				.ctrl_pressed = 0, .shift_pressed = 0});
 		else if (buffer[1] == 67)
-			return ((t_key){.code = KEY_ARROW_RIGHT, .ctrl_pressed = 0,
-				.shift_pressed = 0});
+			return ((t_key){.code = KEY_ARROW_RIGHT, .ascii = 0,
+				.ctrl_pressed = 0, .shift_pressed = 0});
 		else if (buffer[1] == 68)
-			return ((t_key){.code = KEY_ARROW_LEFT, .ctrl_pressed = 0,
-				.shift_pressed = 0});
+			return ((t_key){.code = KEY_ARROW_LEFT, .ascii = 0,
+				.ctrl_pressed = 0, .shift_pressed = 0});
 	}
-	return ((t_key){.code = KEY_NONE, .ctrl_pressed = 0, .shift_pressed = 0});
+	return ((t_key){.code = KEY_NONE, .ascii = 0, .ctrl_pressed = 0,
+		.shift_pressed = 0});
 }
 
 static t_key	parse_control_char(char *buffer)
@@ -58,8 +57,8 @@ static t_key	parse_control_char(char *buffer)
 			.shift_pressed = 0});
 	else
 	{
-		return ((t_key){.code = KEY_A + buffer[0] - 1, .ctrl_pressed = 1,
-			.shift_pressed = 0});
+		return ((t_key){.code = KEY_ASCII, .ascii = 'a' + buffer[0] - 1,
+			.ctrl_pressed = 1, .shift_pressed = 0});
 	}
 }
 
@@ -68,10 +67,7 @@ static t_key	parse_ascii(char *buffer)
 	if (buffer[0] == 32)
 		return ((t_key){.code = KEY_SPACE, .ctrl_pressed = 0,
 			.shift_pressed = 0});
-	else if (buffer[0] >= 'a' && buffer[0] <= 'z')
-		return ((t_key){.code = KEY_A + buffer[0] - 'a', .shift_pressed = 0,
-			.ctrl_pressed = 0});
-	return ((t_key){.code = KEY_A + buffer[0] - 'A', .shift_pressed = 1,
+	return ((t_key){.code = KEY_ASCII, .ascii = buffer[0], .shift_pressed = 0,
 		.ctrl_pressed = 0});
 }
 

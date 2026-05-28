@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 01:42:04 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/28 02:14:13 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/28 04:55:29 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,27 +51,11 @@ uint8_t	refresh_search(t_ctx *ctx)
 	return (found);
 }
 
-static char	get_char(t_key *key)
-{
-	char	c;
-
-	c = 0;
-	if (key->code >= KEY_A && key->code <= KEY_Z)
-	{
-		c = key->code - KEY_A + 'a';
-		if (key->shift_pressed)
-			c -= 32;
-	}
-	return (c);
-}
-
 void	add_search(t_ctx *ctx, t_key *key)
 {
-	char	c;
 	uint8_t	found;
 
-	c = get_char(key);
-	ctx->search[ctx->search_cursor++] = c;
+	ctx->search[ctx->search_cursor++] = key->ascii;
 	found = refresh_search(ctx);
 	if ((!found && ctx->search_cursor != 1) || ctx->search_cursor > SEARCH_SIZE)
 	{

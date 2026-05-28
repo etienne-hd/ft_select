@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 21:30:07 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/27 04:05:05 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/28 04:42:24 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,32 +19,7 @@
 typedef enum e_keymaps
 {
 	KEY_NONE = 0,
-	KEY_A,
-	KEY_B,
-	KEY_C,
-	KEY_D,
-	KEY_E,
-	KEY_F,
-	KEY_G,
-	KEY_H,
-	KEY_I,
-	KEY_J,
-	KEY_K,
-	KEY_L,
-	KEY_M,
-	KEY_N,
-	KEY_O,
-	KEY_P,
-	KEY_Q,
-	KEY_R,
-	KEY_S,
-	KEY_T,
-	KEY_U,
-	KEY_V,
-	KEY_W,
-	KEY_X,
-	KEY_Y,
-	KEY_Z,
+	KEY_ASCII,
 	KEY_ESCAPE,
 	KEY_ENTER,
 	KEY_TAB,
@@ -60,6 +35,7 @@ typedef enum e_keymaps
 typedef struct s_key
 {
 	t_keymaps	code;
+	t_keymaps	ascii;
 	char		ctrl_pressed;
 	char		shift_pressed;
 }				t_key;
