@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 00:09:06 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/28 00:15:37 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/28 02:12:52 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,8 @@ void	render(t_ctx *ctx);
 
 void	on_resize(t_ctx *ctx);
 void	on_key(t_ctx *ctx, t_key *key);
+
+uint8_t	refresh_search(t_ctx *ctx);
+void	add_search(t_ctx *ctx, t_key *key);
 
 #endif

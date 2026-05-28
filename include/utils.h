@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 20:58:15 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/28 00:41:19 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/28 01:45:48 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,6 @@
 # include <sys/types.h>
 
 void	toggle_arg_state(t_ctx *ctx, uint arg_number, uint8_t state);
+uint8_t	get_arg_state(t_ctx *ctx, uint choice_index);
 
 #endif

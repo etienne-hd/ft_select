@@ -6,7 +6,7 @@
 /*   By: ehode <ehode@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 01:13:33 by ehode             #+#    #+#             */
-/*   Updated: 2026/05/28 01:01:44 by ehode            ###   ########.fr       */
+/*   Updated: 2026/05/28 01:19:27 by ehode            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 #include <termcap.h>
 #include <unistd.h>
 
-static uint8_t	render_search_arg(t_ctx *ctx, uint real_choice_index,
-		uint choice_index)
+static uint8_t	render_search_arg(t_ctx *ctx, uint8_t style,
+		uint real_choice_index, uint choice_index)
 {
 	char	tmp;
 	uint8_t	offset;
@@ -30,7 +30,7 @@ static uint8_t	render_search_arg(t_ctx *ctx, uint real_choice_index,
 	if (ctx->choice_state[real_choice_index] & SEARCHED
 		&& !(ctx->choice_state[real_choice_index] & SELECTED))
 	{
-		set_style(&ctx->term, INVERT, YELLOW);
+		set_style(&ctx->term, style | INVERT, YELLOW);
 		tmp = ctx->choices[real_choice_index][ctx->search_cursor];
 		ctx->choices[real_choice_index][ctx->search_cursor] = 0;
 		print_str(&ctx->term, ctx->choices[real_choice_index], (choice_index
@@ -53,7 +53,7 @@ void	render_arg(t_ctx *ctx, uint real_choice_index, uint choice_index)
 		style |= INVERT;
 	if (choice_index == ctx->hover_choice)
 		style |= UNDERLINE;
-	offset = render_search_arg(ctx, real_choice_index, choice_index);
+	offset = render_search_arg(ctx, style, real_choice_index, choice_index);
 	set_style(&ctx->term, style, WHITE);
 	print_str(&ctx->term, ctx->choices[real_choice_index] + offset,
 		(choice_index % ctx->grid.col) * ctx->grid.row + MARGIN + offset,
